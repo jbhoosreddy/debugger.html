@@ -80,8 +80,13 @@ function deleteExpression(expression: Expression) {
  * @param {number} selectedFrameId
  * @static
  */
-function evaluateExpressions(frameId: frameIdType) {
+function evaluateExpressions(frameId: ?frameIdType) {
   return async function({ dispatch, getState, client }: ThunkArgs) {
+    if (!frameId) {
+      const selectedFrame = getSelectedFrame(getState());
+      frameId = selectedFrame ? selectedFrame.id : null;
+    }
+
     for (let expression of getExpressions(getState())) {
       await dispatch(evaluateExpression(expression, frameId));
     }

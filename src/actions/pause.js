@@ -25,8 +25,6 @@ type CommandType = { type: string };
  */
 function resumed() {
   return ({ dispatch, client }: ThunkArgs) => {
-    // dispatch(evaluateExpressions(null));
-
     return dispatch({
       type: constants.RESUME,
       value: undefined,
