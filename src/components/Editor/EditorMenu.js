@@ -25,6 +25,13 @@ function getMenuItems(
   const toggleBlackBoxLabel = selectedSource.get("isBlackBoxed")
     ? unblackboxLabel
     : blackboxLabel;
+  const copyToClipboardLabel = L10N("editor.copyToClipboardLabel");
+
+  const copyToClipboard = {
+    id: "copy-to-clipboard",
+    label: copyToClipboardLabel,
+    click: () => copyToTheClipboard(codeMirror.getSelection())
+  };
 
   const copySourceUrl = {
     id: "node-menu-copy-source",
@@ -93,6 +100,7 @@ function getMenuItems(
   ];
 
   if (textSelected) {
+    menuItems.push(copyToClipboard);
     menuItems.push(watchExpressionLabel);
   }
 
