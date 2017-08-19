@@ -37,7 +37,6 @@ function getLocationAfterAwaitExpression(
       const nextChild = children[++i];
       const nextLocation = nextChild.loc.start;
       nextLocation.sourceId = position.sourceId;
-      nextLocation.column = 0;
       return nextLocation;
     }
   }
