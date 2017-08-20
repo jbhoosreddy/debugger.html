@@ -150,23 +150,42 @@ export function getBreakpointsForSource(state: OuterState, sourceId: string) {
   });
 }
 
-export const getHiddenBreakpoints = createSelector(getBreakpoints, function(
+export const getHiddenBreakpoint = createSelector(getBreakpoints, function(
   breakpoints
 ) {
-  return breakpoints
+  const hiddenBreakpoints = breakpoints
     .valueSeq()
-    .filter(breakpoint => breakpoint.has("hidden"))
-    .map(hiddenBreakpoint => hiddenBreakpoint.get("location"));
+    .filter(breakpoint => breakpoint.hidden)
+    .first();
+  return hiddenBreakpoints;
 });
 
-export const getHiddenBreakpoint = createSelector(
-  getHiddenBreakpoints,
-  hiddenBreakpoints => {
-    if (hiddenBreakpoints.length) {
-      return hiddenBreakpoints[0];
+export const getHiddenBreakpointLocation = createSelector(
+  getHiddenBreakpoint,
+  function(hiddenBreakpoint) {
+    if (!hiddenBreakpoint) {
+      return null;
     }
-    return null;
+    return hiddenBreakpoint.location;
   }
 );
+
+// export const getHiddenBreakpoints = createSelector(getBreakpoints, function(
+//   breakpoints
+// ) {
+//   return breakpoints
+//     .valueSeq()
+//
+// });
+//
+// export const getHiddenBreakpoint = createSelector(
+//   getHiddenBreakpoints,
+//   hiddenBreakpoints => {
+//     if (hiddenBreakpoints.length) {
+//       return hiddenBreakpoints[0];
+//     }
+//     return null;
+//   }
+// );
 
 export default update;

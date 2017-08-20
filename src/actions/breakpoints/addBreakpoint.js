@@ -61,6 +61,7 @@ export default async function addBreakpoint(
     disabled: false,
     loading: false,
     condition: breakpoint.condition,
+    hidden: breakpoint.hidden,
     location: newLocation,
     hitCount,
     generatedLocation: newGeneratedLocation

@@ -82,6 +82,11 @@ class Breakpoints extends PureComponent {
   }
 
   renderBreakpoint(breakpoint) {
+    const isHidden = breakpoint.hidden;
+    if (isHidden) {
+      return;
+    }
+
     const snippet = breakpoint.text || "";
     const locationId = breakpoint.locationId;
     const line = breakpoint.location.line;

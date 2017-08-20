@@ -7,7 +7,7 @@ import { getPause, getLoadedObject, getSelectedSource } from "../selectors";
 import { updateFrameLocations, getPausedPosition } from "../utils/pause";
 import { evaluateExpressions } from "./expressions";
 import { addHiddenBreakpoint, removeBreakpoint } from "./breakpoints";
-import { getHiddenBreakpoint } from "../reducers/breakpoints";
+import { getHiddenBreakpointLocation } from "../reducers/breakpoints";
 import * as parser from "../utils/parser";
 
 import type { Pause, Frame } from "../types";
@@ -120,7 +120,7 @@ export function command({ type }: CommandType) {
 export function stepIn() {
   return ({ dispatch, getState }: ThunkArgs) => {
     if (getPause(getState())) {
-      return dispatch(AstCommand("stepIn"));
+      return dispatch(astCommand("stepIn"));
     }
   };
 }
@@ -134,7 +134,7 @@ export function stepIn() {
 export function stepOver() {
   return ({ dispatch, getState }: ThunkArgs) => {
     if (getPause(getState())) {
-      return dispatch(AstCommand("stepOver"));
+      return dispatch(astCommand("stepOver"));
     }
   };
 }
@@ -148,7 +148,7 @@ export function stepOver() {
 export function stepOut() {
   return ({ dispatch, getState }: ThunkArgs) => {
     if (getPause(getState())) {
-      return dispatch(AstCommand("stepOut"));
+      return dispatch(astCommand("stepOut"));
     }
   };
 }
@@ -233,11 +233,13 @@ export function loadObjectProperties(object: any) {
  * @param stepType
  * @returns {function(ThunkArgs)}
  */
-export function AstCommand(stepType: string) {
+export function astCommand(stepType: string) {
   return async ({ dispatch, getState, sourceMaps }: ThunkArgs) => {
     const pauseInfo = getPause(getState());
     const source = getSelectedSource(getState()).toJS();
-    const currentHiddenBreakpointLocation = getHiddenBreakpoint(getState());
+    const currentHiddenBreakpointLocation = getHiddenBreakpointLocation(
+      getState()
+    );
     if (currentHiddenBreakpointLocation) {
       dispatch(removeBreakpoint(currentHiddenBreakpointLocation));
     }

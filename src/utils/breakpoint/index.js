@@ -129,6 +129,7 @@ export function createPendingBreakpoint(bp: Breakpoint) {
   return {
     condition: bp.condition,
     disabled: bp.disabled,
+    hidden: bp.hidden,
     location: pendingLocation,
     generatedLocation: pendingGeneratedLocation
   };

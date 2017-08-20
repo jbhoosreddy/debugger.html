@@ -37,6 +37,9 @@ class Breakpoint extends Component {
 
   addBreakpoint() {
     const { breakpoint, editor, selectedSource } = this.props;
+    if (breakpoint.hidden) {
+      return;
+    }
 
     // NOTE: we need to wait for the breakpoint to be loaded
     // to get the generated location
@@ -66,6 +69,7 @@ class Breakpoint extends Component {
     return (
       editor !== nextProps.editor ||
       breakpoint.disabled !== nextProps.breakpoint.disabled ||
+      breakpoint.hidden !== nextProps.breakpoint.hidden ||
       breakpoint.condition !== nextProps.breakpoint.condition ||
       breakpoint.loading !== nextProps.breakpoint.loading ||
       selectedSource !== nextProps.selectedSource
