@@ -14,7 +14,7 @@ describe("parser - steps", () => {
     expect(nextStepType).toEqual("resume");
     expect(nextHiddenBreakpointLocation).toEqual({
       line: 4,
-      column: 0,
+      column: 2,
       sourceId: undefined
     });
   });
